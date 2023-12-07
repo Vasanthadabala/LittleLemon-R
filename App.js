@@ -1,11 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import HomeScreen from './Components/HomeScreen';
-import LoginScreen from './Components/LoginScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet, View } from 'react-native';
+import LoginScreen from './Screens/LoginScreen'
+import HomeScreen from './Screens/HomeScreen'
+import ProfileScreen from './Screens/ProfileScreen';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <HomeScreen/>
-    // <LoginScreen/>
+    <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen 
+            name="Login" 
+            component={ LoginScreen } 
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Home" 
+            component={ HomeScreen } 
+            options={{ headerShown: false }} 
+          />
+          <Stack.Screen 
+            name="Profile" 
+            component={ ProfileScreen } 
+            options={{ headerBackButtonMenuEnabled:true }}
+          />
+        </Stack.Navigator>
+    </NavigationContainer>
   )
 }

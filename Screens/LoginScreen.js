@@ -9,7 +9,7 @@ import {
     KeyboardAvoidingView
 } from "react-native";
 
-export default function LoginScreen(){
+export default function LoginScreen({navigation}){
     const [username,onChangeUsername] = useState("")
     const [email,onChangeEmail] = useState("")
     const [password,onChangePassword] = useState("")
@@ -61,7 +61,7 @@ export default function LoginScreen(){
             style= {styles.textInput}
             maxLength={64} 
         />
-        <Pressable style={styles.signUpButton}>
+        <Pressable style={styles.signUpButton} onPress={()=> navigation.navigate("Home")}>
             <Text style={styles.buttontext}>Signup</Text>
         </Pressable>
     </ScrollView>
