@@ -10,9 +10,9 @@ import {
 } from "react-native";
 
 export default function LoginScreen({navigation}){
-    const [username,onChangeUsername] = useState("")
     const [email,onChangeEmail] = useState("")
-    const [password,onChangePassword] = useState("")
+    const [firstName,onChangefirstName] = useState("")
+    const [lastname,onChangeLastName] = useState("")
 
     return(
         <KeyboardAvoidingView
@@ -32,12 +32,22 @@ export default function LoginScreen({navigation}){
         </Text>
 
         <Text style={styles.textInputText}>
-        Username
+            Firstname
         </Text>
         <TextInput
-            value={username}
-            onChangeText={onChangeUsername}
-            placeholder="Username"
+            value={firstName}
+            onChangeText={onChangefirstName}
+            placeholder="Firstname"
+            style= {styles.textInput}
+            maxLength={64} 
+        />
+        <Text style={styles.textInputText}>
+            Lastname
+        </Text>
+        <TextInput
+            value={lastname}
+            onChangeText={onChangeLastName}
+            placeholder="Lastname"
             style= {styles.textInput}
             maxLength={64} 
         />
@@ -51,18 +61,8 @@ export default function LoginScreen({navigation}){
             style= {styles.textInput}
             maxLength={64} 
         />
-        <Text style={styles.textInputText}>
-        Password
-        </Text>
-        <TextInput
-            value={password}
-            onChangeText={onChangePassword}
-            placeholder="Password"
-            style= {styles.textInput}
-            maxLength={64} 
-        />
         <Pressable style={styles.signUpButton} onPress={()=> navigation.navigate("Home")}>
-            <Text style={styles.buttontext}>Signup</Text>
+            <Text style={styles.buttontext}>Sign up</Text>
         </Pressable>
     </ScrollView>
     </KeyboardAvoidingView>
@@ -95,17 +95,17 @@ const styles = StyleSheet.create({
         marginBottom:20
     },
     textInputText:{
-        fontSize:18,
+        fontSize:16,
         fontWeight:'500',
-        paddingLeft:15,
-        marginTop:8
+        marginTop:5,
+        marginLeft:12
     },
     textInput:{
         backgroundColor:'white',
         fontSize:18,
         color:'black',
         height:50,
-        margin:12,
+        margin:10,
         borderWidth:2,
         borderColor:'grey',
         padding:10,
@@ -121,8 +121,8 @@ const styles = StyleSheet.create({
         elevation:2
     },
     buttontext:{
-        fontSize:24,
-        fontWeight:'500',
+        fontSize:22,
+        fontWeight:'600',
         textAlign:'center',
         color:'black'
     }

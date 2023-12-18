@@ -105,10 +105,6 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         marginBottom:5
     },
-    upperPanel:{
-        backgroundColor:'#41544E',
-        padding:15
-    },
     logoImage:{
         height:50,
         width:200,
@@ -122,6 +118,10 @@ const styles = StyleSheet.create({
         marginStart:60,
         resizeMode:'center',
         borderRadius:20
+    },
+    upperPanel:{
+        backgroundColor:'#41544E',
+        padding:12
     },
     upperHeader1:{
         fontSize:32,

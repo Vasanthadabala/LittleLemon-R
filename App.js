@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { StyleSheet, View } from 'react-native';
 import LoginScreen from './Screens/LoginScreen'
 import HomeScreen from './Screens/HomeScreen'
 import ProfileScreen from './Screens/ProfileScreen';
+import { useState } from 'react';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,7 +23,7 @@ export default function App() {
           />
           <Stack.Screen 
             name="Profile" 
-            component={ ProfileScreen } 
+            component={ ProfileScreen }
             options={{ headerBackButtonMenuEnabled:true }}
           />
         </Stack.Navigator>
