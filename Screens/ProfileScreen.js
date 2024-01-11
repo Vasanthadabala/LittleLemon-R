@@ -8,11 +8,10 @@ import {
     TouchableOpacity,
     Pressable,
     ScrollView,
-    Switch,
-    SafeAreaView,
 } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Checkbox from 'expo-checkbox';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function ProfileScreen({navigation}){
     const [firstName,onChangefirstName] = useState("")
@@ -22,6 +21,25 @@ export default function ProfileScreen({navigation}){
 
     const [isSwitchOn, setISSwitchOn] = useState(false);
     
+    useEffect(()=>{
+        loadData();
+    },[]);
+    
+    const loadData = async () => {
+        try {
+            const jsonString = await AsyncStorage.getItem("user");
+            if (jsonString) {
+                const userData = JSON.parse(jsonString);
+                onChangefirstName(userData.firstName);
+                onChangeLastName(userData.lastName);
+                onChangeEmail(userData.email);
+                onChangePhonenumber(userData.phoneNumber);
+                // You may need to add the logic for loading other data such as the switch state
+            }
+        } catch (error) {
+            console.error("Error", error);
+        }
+    };
     return(
         <View style = {styles.container}>
             <ScrollView style = {{padding:5}}>

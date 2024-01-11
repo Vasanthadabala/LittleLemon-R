@@ -1,18 +1,38 @@
-import { useState } from "react";
-import { 
-    StyleSheet,
-    Text,
-    Image,
-    TextInput,
-    ScrollView,
-    Pressable,
-    KeyboardAvoidingView
-} from "react-native";
+import { useState,useEffect} from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StyleSheet,Text,Image,TextInput,ScrollView,Pressable,KeyboardAvoidingView} from "react-native";
+import AppContext from "../Components/AppContext";
+import React, { useContext } from 'react';
 
 export default function LoginScreen({navigation}){
     const [email,onChangeEmail] = useState("")
     const [firstName,onChangefirstName] = useState("")
-    const [lastname,onChangeLastName] = useState("")
+    const [lastName,onChangeLastName] = useState("")
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+    // const { setOnboardingCompleted, updateUser } = useContext(AppContext);
+
+    const user = {firstName,lastName,email};
+
+    useEffect(() => {
+        const firstname = firstName?.length > 3;
+        const lastname = lastName?.length > 3;
+        const emailValid = email?.length > 6 && email?.includes("@");
+    
+        if (firstname && lastname && emailValid) setIsButtonDisabled(false);
+        else setIsButtonDisabled(true);
+      }, [email, firstName,lastName]);
+
+    const storeData = async()=>{
+        try{
+            await AsyncStorage.setItem("user",JSON.stringify(user));
+            // updateUser({ firstName, lastName, email });
+            // setOnboardingCompleted(true);
+            navigation.navigate("Welcome")
+        }catch(e){
+            console.error("Error",e)
+        }
+    };
 
     return(
         <KeyboardAvoidingView
@@ -45,7 +65,7 @@ export default function LoginScreen({navigation}){
             Lastname
         </Text>
         <TextInput
-            value={lastname}
+            value={lastName}
             onChangeText={onChangeLastName}
             placeholder="Lastname"
             style= {styles.textInput}
@@ -61,8 +81,8 @@ export default function LoginScreen({navigation}){
             style= {styles.textInput}
             maxLength={64} 
         />
-        <Pressable style={styles.signUpButton} onPress={()=> navigation.navigate("Home")}>
-            <Text style={styles.buttontext}>Sign up</Text>
+        <Pressable style={[styles.nextButton, isButtonDisabled && styles.disabledButton]} disabled={isButtonDisabled} onPress={() => {storeData()}}>
+            <Text style={styles.buttontext}>Next</Text>
         </Pressable>
     </ScrollView>
     </KeyboardAvoidingView>
@@ -111,7 +131,7 @@ const styles = StyleSheet.create({
         padding:10,
         borderRadius:12
     },
-    signUpButton:{
+    nextButton:{
         backgroundColor:'yellow',
         height:50,
         margin:12,
@@ -125,5 +145,8 @@ const styles = StyleSheet.create({
         fontWeight:'600',
         textAlign:'center',
         color:'black'
-    }
+    },
+    disabledButton: {
+        backgroundColor: "#D3D3D3",
+      },
 })
