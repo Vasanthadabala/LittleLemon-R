@@ -57,7 +57,6 @@ export default function HomeScreen({navigation}){
                     />
                 </TouchableOpacity>
             </View>
-            
 
             <View style = {styles.upperPanel}>
                 <Text style = {[styles.upperHeader1,Platform.OS === 'android' && { fontFamily: 'serif' }]}>

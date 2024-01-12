@@ -1,8 +1,6 @@
 import { useState,useEffect} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StyleSheet,Text,Image,TextInput,ScrollView,Pressable,KeyboardAvoidingView} from "react-native";
-import AppContext from "../Components/AppContext";
-import React, { useContext } from 'react';
 
 export default function LoginScreen({navigation}){
     const [email,onChangeEmail] = useState("")
@@ -10,7 +8,6 @@ export default function LoginScreen({navigation}){
     const [lastName,onChangeLastName] = useState("")
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-    // const { setOnboardingCompleted, updateUser } = useContext(AppContext);
 
     const user = {firstName,lastName,email};
 
@@ -18,7 +15,6 @@ export default function LoginScreen({navigation}){
         const firstname = firstName?.length > 3;
         const lastname = lastName?.length > 3;
         const emailValid = email?.length > 6 && email?.includes("@");
-    
         if (firstname && lastname && emailValid) setIsButtonDisabled(false);
         else setIsButtonDisabled(true);
       }, [email, firstName,lastName]);
@@ -26,9 +22,7 @@ export default function LoginScreen({navigation}){
     const storeData = async()=>{
         try{
             await AsyncStorage.setItem("user",JSON.stringify(user));
-            // updateUser({ firstName, lastName, email });
-            // setOnboardingCompleted(true);
-            navigation.navigate("Welcome")
+            navigation.replace("Welcome")
         }catch(e){
             console.error("Error",e)
         }
