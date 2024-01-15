@@ -1,6 +1,7 @@
-import { useState,useEffect} from "react";
+import { useState,useEffect, useContext} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { StyleSheet,Text,Image,TextInput,ScrollView,Pressable,KeyboardAvoidingView} from "react-native";
+import { Platform,StyleSheet,Text,Image,TextInput,ScrollView,Pressable,KeyboardAvoidingView} from "react-native";
+import { AuthContext } from "../Components/AuthContext";
 
 export default function LoginScreen({navigation}){
     const [email,onChangeEmail] = useState("")
@@ -10,6 +11,7 @@ export default function LoginScreen({navigation}){
 
 
     const user = {firstName,lastName,email};
+    const {login} = useContext(AuthContext)
 
     useEffect(() => {
         const firstname = firstName?.length > 3;
@@ -22,6 +24,7 @@ export default function LoginScreen({navigation}){
     const storeData = async()=>{
         try{
             await AsyncStorage.setItem("user",JSON.stringify(user));
+            login();
             navigation.replace("Welcome")
         }catch(e){
             console.error("Error",e)
